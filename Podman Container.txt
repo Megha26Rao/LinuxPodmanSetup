@@ -1,0 +1,46 @@
+[root@serverb ~] # dnf install container-tools  -y
+
+[root@serverb ~] # mkdir /opt/files /opt/processed
+
+#chown student:student /opt/files /opt/processed
+
+#chmod 777 /opt/files /opt/processed
+
+#loginctl enable-linger student
+
+[root(or)student@workstation ~] #ssh student@serverb
+
+[student@serverb ]# podman version
+
+Container registry server is docker.io
+Use admin034 as username and redhat321 as password for container registry
+
+[student@serverb ]# podman login docker.io
+username :admin034
+password :redhat321
+
+[student@serverb ]# podman pull <image name>
+
+          [ ---- select docker.io -----]
+
+[student@serverb ]#podman run -d --name <container name> -v /opt/files/:/opt/incoming/:Z -v /opt/processed/:/opt/outgoing/:Z <image name>
+
+[student@serverb ]# mkdir -p .config/systemd/user
+
+[student@serverb ]# cd .config/systemd/user
+
+[student@serverb user]# podman generate systemd --name <container name> --new --files
+
+ls --> To verify the Output[container-<container name>.service]
+
+[student@serverb user]#systemctl --user daemon-reload
+
+[student@serverb user]#systemctl --user start container-<container name>.service
+
+[student@serverb user]#systemctl --user enable container-<container name>.service
+
+[student@serverb user]#opt /files/processed/data
+
+[student@serverb user]#file opt/files/data
+
+[student@serverb user]#file opt/processed/data
