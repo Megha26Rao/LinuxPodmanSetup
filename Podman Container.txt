@@ -1,3 +1,4 @@
+//Install container in root server
 [root@serverb ~] # dnf install container-tools  -y
 
 [root@serverb ~] # mkdir /opt/files /opt/processed
